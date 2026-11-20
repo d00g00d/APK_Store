@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-28:12
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:2:1-36:12
 MERGED from [io.insert-koin:koin-androidx-compose:3.5.3] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\3cf4bed3fc7a35f7ef46cb0c1c81fcdf\transformed\koin-androidx-compose-3.5.3\AndroidManifest.xml:2:1-9:12
 MERGED from [io.insert-koin:koin-android:3.5.3] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\87c18da6fce6368213aaee3a5904d616\transformed\koin-android-3.5.3\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\9f305ae8ee69538c1ebab83bb219b654\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -90,8 +90,8 @@ ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\Androi
 	android:name
 		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:7:22-77
 application
-ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:9:5-26:19
-INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:9:5-26:19
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:9:5-34:19
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:9:5-34:19
 MERGED from [io.insert-koin:koin-android:3.5.3] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\87c18da6fce6368213aaee3a5904d616\transformed\koin-android-3.5.3\AndroidManifest.xml:9:5-20
 MERGED from [io.insert-koin:koin-android:3.5.3] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\87c18da6fce6368213aaee3a5904d616\transformed\koin-android-3.5.3\AndroidManifest.xml:9:5-20
 MERGED from [androidx.compose.ui:ui-tooling-android:1.6.1] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\b718cb2695058dda58fcca90167fb0bd\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
@@ -124,24 +124,36 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Kuznetsov\.gradle\
 		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:14:9-77
 	android:name
 		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:10:9-28
-activity#ru.d00g00d.apkstore.MainActivity
-ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:16:9-24:20
+receiver#ru.d00g00d.apkstore.downloader.DownloadReceiver
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:16:9-22:20
 	android:exported
 		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:18:13-36
+	android:name
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:17:13-56
+intent-filter#action:name:android.intent.action.DOWNLOAD_COMPLETE
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:19:13-21:29
+action#android.intent.action.DOWNLOAD_COMPLETE
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:20:17-82
+	android:name
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:20:25-79
+activity#ru.d00g00d.apkstore.MainActivity
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:24:9-32:20
+	android:exported
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:26:13-36
 	android:theme
-		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:19:13-81
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:27:13-81
 	android:name
-		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:17:13-41
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:25:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:20:13-23:29
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:28:13-31:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:21:17-69
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:29:17-69
 	android:name
-		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:21:25-66
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:29:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:22:17-77
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:30:17-77
 	android:name
-		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:22:27-74
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml:30:27-74
 uses-sdk
 INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\app\src\main\AndroidManifest.xml
