@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:label="ApkStore DPI Mod"
+        android:supportsRtl="true">
+
+        <!-- Xposed Module Meta-data -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Modifies DisplayMetrics and Configuration to simulate a different screen DPI for patched apps." />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="82" />
+
+    </application>
+</manifest>
