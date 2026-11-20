@@ -40,7 +40,7 @@ class DownloadReceiver : BroadcastReceiver(), KoinComponent {
                             val file = File(android.net.Uri.parse(uriString).path ?: "")
                             if (file.exists()) {
                                 Timber.d("Download complete: ${file.absolutePath}. Starting ADB install...")
-                                installApk(file)
+                                installApk(context, file)
                             }
                         }
                     }
@@ -49,11 +49,15 @@ class DownloadReceiver : BroadcastReceiver(), KoinComponent {
         }
     }
 
-    private fun installApk(apkFile: File) {
+    private fun installApk(context: Context, apkFile: File) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Временно ставим на текущего пользователя
                 val userId = android.os.Process.myUserHandle().hashCode()
+                
+                // Получаем package name из APK для последующей выдачи прав
+                val pi = context.packageManager.getPackageArchiveInfo(apkFile.absolutePath, 0)
+                val packageName = pi?.packageName
 
                 FileInputStream(apkFile).use { fis ->
                     val result = adbClient.streamInstallApk(
@@ -64,8 +68,11 @@ class DownloadReceiver : BroadcastReceiver(), KoinComponent {
 
                     if (result.isSuccess) {
                         Timber.i("Install success: ${result.getOrNull()}")
-                        // Для получения имени пакета нужно распарсить APK,
-                        // пока оставим как заглушку (PermissionManager сможет позже включить разрешения)
+                        // Автоматически выдаем все спец. права, если мы смогли получить packageName
+                        if (packageName != null) {
+                            Timber.d("Granting permissions for $packageName")
+                            permissionManager.grantAll(packageName, userId)
+                        }
                     } else {
                         Timber.e("Install failed: ${result.exceptionOrNull()?.message}")
                     }

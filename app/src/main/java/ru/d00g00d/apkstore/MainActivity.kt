@@ -3,8 +3,12 @@ package ru.d00g00d.apkstore
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import ru.d00g00d.apkstore.ui.main.MainScreen
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import org.koin.androidx.compose.koinViewModel
+import ru.d00g00d.apkstore.ui.navigation.AppNavigation
 import ru.d00g00d.apkstore.ui.theme.ApkStoreTheme
+import ru.d00g00d.apkstore.ui.theme.ThemeViewModel
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
@@ -22,8 +26,11 @@ class MainActivity : ComponentActivity() {
         Timber.d("MainActivity launched on displayId: $displayId")
 
         setContent {
-            ApkStoreTheme {
-                MainScreen()
+            val themeViewModel: ThemeViewModel = koinViewModel()
+            val themeMode by themeViewModel.themeMode.collectAsState()
+
+            ApkStoreTheme(themeMode = themeMode) {
+                AppNavigation()
             }
         }
     }

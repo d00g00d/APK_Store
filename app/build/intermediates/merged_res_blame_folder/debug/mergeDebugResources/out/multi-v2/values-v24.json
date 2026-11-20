@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "ru.d00g00d.apkstore.app-mergeDebugResources-48:/values-v24/values-v24.xml",
+            "outputFile": "ru.d00g00d.apkstore.app-mergeDebugResources-59:/values-v24/values-v24.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Kuznetsov\\.gradle\\caches\\9.6.0\\transforms\\547b21d1bcf473f2803ad1ded2212182\\transformed\\appcompat-1.6.1\\res\\values-v24\\values-v24.xml",

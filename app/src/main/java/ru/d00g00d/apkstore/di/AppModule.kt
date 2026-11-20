@@ -15,7 +15,13 @@ import ru.d00g00d.apkstore.data.network.GitHubApiService
 import ru.d00g00d.apkstore.data.repository.AppRepository
 import ru.d00g00d.apkstore.downloader.ApkDownloader
 
+import ru.d00g00d.apkstore.ui.local.LocalAppsViewModel
 import ru.d00g00d.apkstore.ui.main.MainViewModel
+
+import ru.d00g00d.apkstore.data.preferences.ThemePreferences
+import ru.d00g00d.apkstore.downloader.DownloadTracker
+
+import ru.d00g00d.apkstore.ui.theme.ThemeViewModel
 
 val appModule = module {
     // Сеть
@@ -31,17 +37,21 @@ val appModule = module {
             .create(GitHubApiService::class.java)
     }
 
-    // Репозиторий
+    // Репозиторий и Preferences
     single { AppRepository(get()) }
+    single { ThemePreferences(androidContext()) }
 
-    // Загрузчик
+    // Загрузчик и Трекер
     single { ApkDownloader(androidContext()) }
+    single { DownloadTracker(androidContext()) }
 
     // Ядро установки (adb, permission, eas)
     single { AdbClient(androidContext()) }
     single { PermissionManager(androidContext(), get()) }
     single { RearDhuEasBridge(androidContext()) }
 
-    // UI
-    viewModel { MainViewModel(get(), get()) }
+    // UI ViewModels
+    viewModel { MainViewModel(get(), get(), get(), androidContext()) }
+    viewModel { LocalAppsViewModel(androidContext(), get()) }
+    viewModel { ThemeViewModel(get()) }
 }

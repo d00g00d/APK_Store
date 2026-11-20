@@ -31,6 +31,7 @@ dependencies {
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     
@@ -49,4 +50,10 @@ dependencies {
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.8.0")
+
+    // DataStore Preferences
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 }

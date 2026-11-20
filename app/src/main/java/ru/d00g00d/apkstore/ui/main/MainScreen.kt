@@ -3,6 +3,11 @@ package ru.d00g00d.apkstore.ui.main
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.filled.BrightnessAuto
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,21 +17,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ru.d00g00d.apkstore.data.model.AppModel
+import ru.d00g00d.apkstore.data.preferences.ThemeMode
+import ru.d00g00d.apkstore.ui.theme.ThemeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = koinViewModel()
+    viewModel: MainViewModel = koinViewModel(),
+    themeViewModel: ThemeViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val themeMode by themeViewModel.themeMode.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("APK Store") },
+                title = { 
+                    OutlinedTextField(
+                        value = uiState.searchQuery,
+                        onValueChange = { viewModel.updateSearchQuery(it) },
+                        modifier = Modifier.fillMaxWidth(),
+                        placeholder = { Text("Поиск...") },
+                        trailingIcon = {
+                            if (uiState.searchQuery.isNotEmpty()) {
+                                IconButton(onClick = { viewModel.updateSearchQuery("") }) {
+                                    Icon(Icons.Filled.Clear, contentDescription = "Очистить")
+                                }
+                            }
+                        },
+                        singleLine = true
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { themeViewModel.toggleTheme() }) {
+                        val icon = when (themeMode) {
+                            ThemeMode.LIGHT -> Icons.Filled.LightMode
+                            ThemeMode.DARK -> Icons.Filled.DarkMode
+                            ThemeMode.AUTO -> Icons.Filled.BrightnessAuto
+                        }
+                        Icon(icon, contentDescription = "Переключить тему")
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             )
         }
@@ -53,11 +86,11 @@ fun MainScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
-                items(uiState.apps) { app ->
+                items(uiState.apps) { itemState ->
                     AppItem(
-                        name = app.name,
-                        version = app.version,
-                        onDownloadClick = { viewModel.downloadApp(app) }
+                        itemState = itemState,
+                        onDownloadClick = { viewModel.downloadApp(itemState) },
+                        onOpenClick = { viewModel.openApp(itemState.app.packageName) }
                     )
                 }
             }
@@ -66,7 +99,12 @@ fun MainScreen(
 }
 
 @Composable
-fun AppItem(name: String, version: String, onDownloadClick: () -> Unit) {
+fun AppItem(
+    itemState: AppItemState,
+    onDownloadClick: () -> Unit,
+    onOpenClick: () -> Unit
+) {
+    val app = itemState.app
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,11 +134,11 @@ fun AppItem(name: String, version: String, onDownloadClick: () -> Unit) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = name,
+                    text = app.name,
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(
-                    text = version,
+                    text = app.version,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -108,11 +146,36 @@ fun AppItem(name: String, version: String, onDownloadClick: () -> Unit) {
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(
-                onClick = onDownloadClick,
-                modifier = Modifier.size(width = 140.dp, height = 64.dp)
-            ) {
-                Text("Скачать", style = MaterialTheme.typography.bodyLarge)
+            when (itemState.status) {
+                AppStatus.DOWNLOAD, AppStatus.UPDATE -> {
+                    Button(
+                        onClick = onDownloadClick,
+                        modifier = Modifier.size(width = 140.dp, height = 64.dp)
+                    ) {
+                        val text = if (itemState.status == AppStatus.UPDATE) "Обновить" else "Скачать"
+                        Text(text, style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+                AppStatus.DOWNLOADING -> {
+                    Box(modifier = Modifier.size(width = 140.dp, height = 64.dp), contentAlignment = Alignment.Center) {
+                        if (itemState.progress >= 0) {
+                            LinearProgressIndicator(
+                                progress = { itemState.progress / 100f },
+                                modifier = Modifier.fillMaxWidth().height(24.dp)
+                            )
+                        } else {
+                            CircularProgressIndicator()
+                        }
+                    }
+                }
+                AppStatus.OPEN -> {
+                    OutlinedButton(
+                        onClick = onOpenClick,
+                        modifier = Modifier.size(width = 140.dp, height = 64.dp)
+                    ) {
+                        Text("Открыть", style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
             }
         }
     }

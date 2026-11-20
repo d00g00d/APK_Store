@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import ru.d00g00d.apkstore.data.preferences.ThemeMode
 import java.util.Calendar
 
 private val DarkColorScheme = darkColorScheme(
@@ -25,14 +26,21 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun ApkStoreTheme(
+    themeMode: ThemeMode = ThemeMode.AUTO,
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    // Авторежим переключения по времени (например, после 18:00 и до 07:00 включать темную тему)
-    val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-    val isNightTime = hour >= 18 || hour < 7
-    val useDarkTheme = darkTheme || isNightTime
+    val useDarkTheme = when (themeMode) {
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+        ThemeMode.AUTO -> {
+            // Авторежим переключения по времени (например, после 18:00 и до 07:00 включать темную тему)
+            val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            val isNightTime = hour >= 18 || hour < 7
+            darkTheme || isNightTime
+        }
+    }
 
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
