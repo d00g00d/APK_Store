@@ -38,6 +38,12 @@ class AdbClient(context: Context) {
     private val mutex = Mutex()
     private val localIdGen = AtomicInteger(10)
 
+    data class AndroidUser(
+        val id: Int,
+        val name: String,
+        val isSystem: Boolean
+    )
+
     private var activeSocket: Socket? = null
     private var activeInput: DataInputStream? = null
     private var activeOutput: OutputStream? = null
@@ -111,6 +117,37 @@ class AdbClient(context: Context) {
             activeOutput = null
             throw e
         }
+    }
+
+    suspend fun getUsers(): List<AndroidUser> {
+        val result = shell("pm list users")
+        if (result.isFailure) return listOf(AndroidUser(0, "Водитель (Система)", true))
+
+        val output = result.getOrNull() ?: return listOf(AndroidUser(0, "Водитель (Система)", true))
+        val users = mutableListOf<AndroidUser>()
+
+        val regex = """UserInfo\{(\d+):([^:]+):""".toRegex()
+        val matches = regex.findAll(output)
+
+        for (match in matches) {
+            val id = match.groupValues[1].toInt()
+            val name = match.groupValues[2]
+            val isSystem = id == 0
+            
+            // Если это система (0), назовем "Водитель"
+            // Если это второй юзер (10+), назовем "Пассажир / Задний экран"
+            val displayName = when (id) {
+                0 -> "Водитель (Система)"
+                10 -> "Пассажир (Задний экран)"
+                else -> name
+            }
+            users.add(AndroidUser(id, displayName, isSystem))
+        }
+
+        if (users.isEmpty()) {
+            users.add(AndroidUser(0, "Водитель (Система)", true))
+        }
+        return users
     }
 
     suspend fun shell(

@@ -18,6 +18,7 @@ import ru.d00g00d.apkstore.core.permission.PermissionManager
 
 import ru.d00g00d.apkstore.core.display.DisplayController
 import ru.d00g00d.apkstore.core.adb.AdbClient
+import ru.d00g00d.apkstore.core.adb.AdbClient.AndroidUser
 
 data class LocalAppItem(
     val packageName: String,
@@ -34,7 +35,8 @@ data class LocalAppsUiState(
     val searchQuery: String = "",
     val selectedApp: LocalAppItem? = null,
     val permissions: List<PermissionEntry> = emptyList(),
-    val isPermissionsLoading: Boolean = false
+    val isPermissionsLoading: Boolean = false,
+    val users: List<AndroidUser> = emptyList()
 )
 
 class LocalAppsViewModel(
@@ -51,6 +53,18 @@ class LocalAppsViewModel(
 
     init {
         loadApps()
+        loadUsers()
+    }
+
+    private fun loadUsers() {
+        viewModelScope.launch {
+            try {
+                val userList = adbClient.getUsers()
+                _uiState.update { it.copy(users = userList) }
+            } catch (e: Exception) {
+                // Если не получилось - просто оставим пустой список
+            }
+        }
     }
 
     fun loadApps() {
@@ -136,19 +150,21 @@ class LocalAppsViewModel(
         }
     }
 
-    fun openApp(packageName: String, displayId: Int?, enableFullscreen: Boolean) {
+    fun openApp(packageName: String, displayId: Int?, enableFullscreen: Boolean, userId: Int = 0) {
+        // Мы можем добавить логику запуска под конкретным пользователем позже, 
+        // пока оставим как было через ActivityOptions, либо добавим вызов am start --user
         displayController.launchApp(packageName, displayId, enableFullscreen)
     }
 
-    fun stopApp(app: LocalAppItem) {
+    fun stopApp(app: LocalAppItem, userId: Int = 0) {
         viewModelScope.launch(Dispatchers.IO) {
-            adbClient.shell("am force-stop --user ${app.userId} ${app.packageName}")
+            adbClient.shell("am force-stop --user $userId ${app.packageName}")
         }
     }
 
-    fun uninstallApp(app: LocalAppItem) {
+    fun uninstallApp(app: LocalAppItem, userId: Int = 0) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = adbClient.shell("pm uninstall --user ${app.userId} ${app.packageName}")
+            val result = adbClient.shell("pm uninstall --user $userId ${app.packageName}")
             if (result.isSuccess) {
                 loadApps()
                 _uiState.update { it.copy(selectedApp = null, permissions = emptyList()) }

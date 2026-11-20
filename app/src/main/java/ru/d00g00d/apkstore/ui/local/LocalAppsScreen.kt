@@ -148,6 +148,7 @@ fun LocalAppsScreen(
                     var showAdvancedLaunch by remember { mutableStateOf(false) }
                     
                     var selectedDisplay by remember { mutableStateOf<Int?>(null) }
+                    var selectedUser by remember { mutableStateOf<Int?>(null) }
                     var enableFullscreen by remember { mutableStateOf(false) }
 
                     if (showUninstallDialog) {
@@ -178,10 +179,10 @@ fun LocalAppsScreen(
                                 Text("Версия: ${app.version}", style = MaterialTheme.typography.bodySmall)
                             }
                             // Кнопки действий
-                            IconButton(onClick = { viewModel.openApp(app.packageName, selectedDisplay, enableFullscreen) }) {
+                            IconButton(onClick = { viewModel.openApp(app.packageName, selectedDisplay, enableFullscreen, selectedUser ?: 0) }) {
                                 Icon(Icons.Filled.PlayArrow, contentDescription = "Открыть")
                             }
-                            IconButton(onClick = { viewModel.stopApp(app) }) {
+                            IconButton(onClick = { viewModel.stopApp(app, selectedUser ?: 0) }) {
                                 Icon(Icons.Filled.Stop, contentDescription = "Остановить")
                             }
                             IconButton(onClick = { showUninstallDialog = true }) {
@@ -211,7 +212,21 @@ fun LocalAppsScreen(
                                 
                                 AnimatedVisibility(visible = showAdvancedLaunch) {
                                     Column(modifier = Modifier.padding(top = 16.dp)) {
-                                        Text("Экран запуска:", style = MaterialTheme.typography.bodyMedium)
+                                        if (uiState.users.isNotEmpty()) {
+                                            Text("Пользователь (Экран):", style = MaterialTheme.typography.bodyMedium)
+                                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                                uiState.users.forEach { user ->
+                                                    FilterChip(
+                                                        selected = (selectedUser == user.id) || (selectedUser == null && user.id == 0),
+                                                        onClick = { selectedUser = user.id },
+                                                        label = { Text(user.name) }
+                                                    )
+                                                }
+                                            }
+                                            Spacer(modifier = Modifier.height(8.dp))
+                                        }
+
+                                        Text("Экран запуска (Display):", style = MaterialTheme.typography.bodyMedium)
                                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                                             FilterChip(selected = selectedDisplay == null, onClick = { selectedDisplay = null }, label = { Text("Авто") })
                                             FilterChip(selected = selectedDisplay == DisplayController.DISPLAY_DRIVER_1001, onClick = { selectedDisplay = DisplayController.DISPLAY_DRIVER_1001 }, label = { Text("Водитель") })
