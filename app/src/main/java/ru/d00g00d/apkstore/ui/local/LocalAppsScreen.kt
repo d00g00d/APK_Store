@@ -10,6 +10,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,6 +26,8 @@ import ru.d00g00d.apkstore.ui.theme.ThemeViewModel
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.BrightnessAuto
+import ru.d00g00d.apkstore.core.display.DisplayController
+import androidx.compose.animation.AnimatedVisibility
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -138,14 +144,93 @@ fun LocalAppsScreen(
                 if (app == null) {
                     Text("Выберите приложение из списка", modifier = Modifier.align(Alignment.Center))
                 } else {
+                    var showUninstallDialog by remember { mutableStateOf(false) }
+                    var showAdvancedLaunch by remember { mutableStateOf(false) }
+                    
+                    var selectedDisplay by remember { mutableStateOf<Int?>(null) }
+                    var enableFullscreen by remember { mutableStateOf(false) }
+
+                    if (showUninstallDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showUninstallDialog = false },
+                            title = { Text("Удаление приложения") },
+                            text = { Text("Вы уверены, что хотите удалить ${app.name}?") },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    showUninstallDialog = false
+                                    viewModel.uninstallApp(app)
+                                }) { Text("Удалить", color = MaterialTheme.colorScheme.error) }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showUninstallDialog = false }) { Text("Отмена") }
+                            }
+                        )
+                    }
+
                     Column(modifier = Modifier.fillMaxSize()) {
-                        Text(app.name, style = MaterialTheme.typography.headlineMedium)
-                        Text(app.packageName, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text("Версия: ${app.version}", style = MaterialTheme.typography.bodyMedium)
-                        
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(app.name, style = MaterialTheme.typography.headlineMedium)
+                                Text(app.packageName, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text("Версия: ${app.version}", style = MaterialTheme.typography.bodySmall)
+                            }
+                            // Кнопки действий
+                            IconButton(onClick = { viewModel.openApp(app.packageName, selectedDisplay, enableFullscreen) }) {
+                                Icon(Icons.Filled.PlayArrow, contentDescription = "Открыть")
+                            }
+                            IconButton(onClick = { viewModel.stopApp(app) }) {
+                                Icon(Icons.Filled.Stop, contentDescription = "Остановить")
+                            }
+                            IconButton(onClick = { showUninstallDialog = true }) {
+                                Icon(Icons.Filled.Delete, contentDescription = "Удалить", tint = MaterialTheme.colorScheme.error)
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Опции запуска (Edge панель - встраиваем как раскрывающуюся карту)
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth().clickable { showAdvancedLaunch = !showAdvancedLaunch },
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(Icons.Filled.Tune, contentDescription = null, modifier = Modifier.size(20.dp))
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text("Расширенный запуск (Дисплей)", style = MaterialTheme.typography.titleMedium)
+                                    }
+                                }
+                                
+                                AnimatedVisibility(visible = showAdvancedLaunch) {
+                                    Column(modifier = Modifier.padding(top = 16.dp)) {
+                                        Text("Экран запуска:", style = MaterialTheme.typography.bodyMedium)
+                                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                            FilterChip(selected = selectedDisplay == null, onClick = { selectedDisplay = null }, label = { Text("Авто") })
+                                            FilterChip(selected = selectedDisplay == DisplayController.DISPLAY_DRIVER_1001, onClick = { selectedDisplay = DisplayController.DISPLAY_DRIVER_1001 }, label = { Text("Водитель") })
+                                            FilterChip(selected = selectedDisplay == DisplayController.DISPLAY_FULL_1003, onClick = { selectedDisplay = DisplayController.DISPLAY_FULL_1003 }, label = { Text("Пассажир/Full") })
+                                        }
+                                        
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Text("Скрыть статус-бар (Immersive):", modifier = Modifier.weight(1f))
+                                            Switch(checked = enableFullscreen, onCheckedChange = { enableFullscreen = it })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         Spacer(modifier = Modifier.height(24.dp))
                         Text("Настройки и Права", style = MaterialTheme.typography.titleLarge)
-                        Divider(modifier = Modifier.padding(vertical = 8.dp))
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
                         if (uiState.isPermissionsLoading) {
                             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))

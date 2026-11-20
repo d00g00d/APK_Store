@@ -23,6 +23,8 @@ import ru.d00g00d.apkstore.downloader.DownloadTracker
 
 import ru.d00g00d.apkstore.ui.theme.ThemeViewModel
 
+import ru.d00g00d.apkstore.core.display.DisplayController
+
 val appModule = module {
     // Сеть
     single {
@@ -49,6 +51,7 @@ val appModule = module {
     single { AdbClient(androidContext()) }
     single { PermissionManager(androidContext(), get()) }
     single { RearDhuEasBridge(androidContext()) }
+    single { DisplayController(androidContext()) }
 
     // UI ViewModels
     viewModel { MainViewModel(get(), get(), get(), androidContext()) }

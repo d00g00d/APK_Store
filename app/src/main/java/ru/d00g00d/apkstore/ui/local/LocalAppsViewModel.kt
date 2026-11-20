@@ -16,6 +16,9 @@ import kotlinx.coroutines.withContext
 import ru.d00g00d.apkstore.core.permission.PermissionEntry
 import ru.d00g00d.apkstore.core.permission.PermissionManager
 
+import ru.d00g00d.apkstore.core.display.DisplayController
+import ru.d00g00d.apkstore.core.adb.AdbClient
+
 data class LocalAppItem(
     val packageName: String,
     val name: String,
@@ -36,7 +39,9 @@ data class LocalAppsUiState(
 
 class LocalAppsViewModel(
     private val context: Context,
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    private val adbClient: AdbClient,
+    private val displayController: DisplayController
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LocalAppsUiState())
@@ -127,6 +132,26 @@ class LocalAppsViewModel(
                 }
             } catch (e: Exception) {
                 // Обработка ошибки
+            }
+        }
+    }
+
+    fun openApp(packageName: String, displayId: Int?, enableFullscreen: Boolean) {
+        displayController.launchApp(packageName, displayId, enableFullscreen)
+    }
+
+    fun stopApp(app: LocalAppItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            adbClient.shell("am force-stop --user ${app.userId} ${app.packageName}")
+        }
+    }
+
+    fun uninstallApp(app: LocalAppItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = adbClient.shell("pm uninstall --user ${app.userId} ${app.packageName}")
+            if (result.isSuccess) {
+                loadApps()
+                _uiState.update { it.copy(selectedApp = null, permissions = emptyList()) }
             }
         }
     }
