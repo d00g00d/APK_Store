@@ -1,0 +1,77 @@
+name: Auto-Patch APKs via LSPatch
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-apks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout store repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build DPI Module
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :dpi-module:assembleRelease
+          cp dpi-module/build/outputs/apk/release/dpi-module-release-unsigned.apk dpi-module.apk
+
+      - name: Download LSPatch
+        run: |
+          # Временно используем готовый jar (можно заменить на кастомную ссылку или бинарник в репо)
+          wget https://github.com/LSPosed/LSPatch/releases/download/v0.6/lspatch.jar -O lspatch.jar || true
+
+      - name: Download release assets
+        uses: robinraju/release-downloader@v1.10
+        with:
+          releaseId: ${{ github.event.release.id }}
+          fileName: "*.apk"
+          out-file-path: "downloaded-apks"
+
+      - name: Patch and Sign APKs
+        run: |
+          cd downloaded-apks
+          for apk in *.apk; do
+            # Игнорируем уже пропатченные
+            if [[ "$apk" == *"_patched.apk" ]]; then
+              continue
+            fi
+            
+            # Пропускаем сам модуль, если он вдруг тут
+            if [[ "$apk" == "dpi-module.apk" ]]; then
+              continue
+            fi
+            
+            echo "Patching $apk..."
+            # Патчим APK с помощью LSPatch, встраивая наш модуль
+            java -jar ../lspatch.jar "$apk" -m ../dpi-module.apk -f -o patched_out/
+            
+            patched_file=$(find patched_out/ -name "*.apk" | head -n 1)
+            
+            if [ -n "$patched_file" ]; then
+                new_name="${apk%.apk}_patched.apk"
+                mv "$patched_file" "../$new_name"
+            fi
+          done
+
+      - name: Upload patched APKs to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*_patched.apk"
+
+      - name: Trigger store.json build
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: rebuild-store-json
