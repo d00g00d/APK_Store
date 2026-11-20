@@ -55,6 +55,6 @@ val appModule = module {
 
     // UI ViewModels
     viewModel { MainViewModel(get(), get(), get(), androidContext()) }
-    viewModel { LocalAppsViewModel(androidContext(), get()) }
+    viewModel { LocalAppsViewModel(androidContext(), get(), get(), get()) }
     viewModel { ThemeViewModel(get()) }
 }
