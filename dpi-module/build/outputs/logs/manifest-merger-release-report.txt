@@ -1,0 +1,58 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:2:1-19:12
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:2:1-19:12
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:2:1-19:12
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:2:1-19:12
+MERGED from [top.canyie.pine:core:0.3.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\859bc2ed9128bf47d3d44718e121dd78\transformed\core-0.3.0\AndroidManifest.xml:2:1-7:12
+MERGED from [top.canyie.pine:xposed:0.2.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\2335b46294284faf1321092af003249e\transformed\xposed-0.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [dev.rikka.ndk.thirdparty:cxx:1.2.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\4910e06e24fa3f4e03d636943197acd1\transformed\cxx-1.2.0\AndroidManifest.xml:2:1-9:12
+	package
+		INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:3:5-18:19
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:3:5-18:19
+	android:extractNativeLibs
+		INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+	android:supportsRtl
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:5:9-35
+	android:label
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:4:9-41
+meta-data#xposedmodule
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:8:9-10:36
+	android:value
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:10:13-33
+	android:name
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:9:13-40
+meta-data#xposeddescription
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:11:9-13:126
+	android:value
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:13:13-123
+	android:name
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:12:13-45
+meta-data#xposedminversion
+ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:14:9-16:34
+	android:value
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:16:13-31
+	android:name
+		ADDED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:15:13-44
+uses-sdk
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+MERGED from [top.canyie.pine:core:0.3.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\859bc2ed9128bf47d3d44718e121dd78\transformed\core-0.3.0\AndroidManifest.xml:5:5-44
+MERGED from [top.canyie.pine:core:0.3.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\859bc2ed9128bf47d3d44718e121dd78\transformed\core-0.3.0\AndroidManifest.xml:5:5-44
+MERGED from [top.canyie.pine:xposed:0.2.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\2335b46294284faf1321092af003249e\transformed\xposed-0.2.0\AndroidManifest.xml:5:5-44
+MERGED from [top.canyie.pine:xposed:0.2.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\2335b46294284faf1321092af003249e\transformed\xposed-0.2.0\AndroidManifest.xml:5:5-44
+MERGED from [dev.rikka.ndk.thirdparty:cxx:1.2.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\4910e06e24fa3f4e03d636943197acd1\transformed\cxx-1.2.0\AndroidManifest.xml:5:5-7:41
+MERGED from [dev.rikka.ndk.thirdparty:cxx:1.2.0] C:\Users\Kuznetsov\.gradle\caches\9.6.0\transforms\4910e06e24fa3f4e03d636943197acd1\transformed\cxx-1.2.0\AndroidManifest.xml:5:5-7:41
+	android:targetSdkVersion
+		INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml

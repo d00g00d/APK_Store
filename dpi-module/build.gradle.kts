@@ -28,5 +28,6 @@ android {
 
 dependencies {
     compileOnly("de.robv.android.xposed:api:82")
-    implementation("top.canyie.pine:core:0.3.1")
+    implementation("top.canyie.pine:core:0.3.0")
+    implementation("top.canyie.pine:xposed:0.2.0")
 }

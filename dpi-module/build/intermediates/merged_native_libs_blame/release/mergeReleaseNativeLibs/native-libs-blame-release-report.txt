@@ -1,0 +1,2 @@
+lib/arm64-v8a/libpine.so->top.canyie.pine:core:0.3.0
+lib/armeabi-v7a/libpine.so->top.canyie.pine:core:0.3.0

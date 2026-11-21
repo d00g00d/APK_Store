@@ -1,0 +1,44 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="ru.d00g00d.apkstore.dpi"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+7-->INJECTED
+8        android:minSdkVersion="24"
+8-->INJECTED
+9        android:targetSdkVersion="34" />
+9-->INJECTED
+10
+11    <application
+11-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:3:5-18:19
+12        android:extractNativeLibs="false"
+12-->INJECTED
+13        android:label="ApkStore DPI Mod"
+13-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:4:9-41
+14        android:supportsRtl="true" >
+14-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:5:9-35
+15
+16        <!-- Xposed Module Meta-data -->
+17        <meta-data
+17-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:8:9-10:36
+18            android:name="xposedmodule"
+18-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:9:13-40
+19            android:value="true" />
+19-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:10:13-33
+20        <meta-data
+20-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:11:9-13:126
+21            android:name="xposeddescription"
+21-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:12:13-45
+22            android:value="Modifies DisplayMetrics and Configuration to simulate a different screen DPI for patched apps." />
+22-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:13:13-123
+23        <meta-data
+23-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:14:9-16:34
+24            android:name="xposedminversion"
+24-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:15:13-44
+25            android:value="82" />
+25-->C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\AndroidManifest.xml:16:13-31
+26    </application>
+27
+28</manifest>

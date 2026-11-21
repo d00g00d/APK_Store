@@ -1,0 +1,8 @@
+ru.d00g00d.apkstore.dpi.dpi-module-pngs-0 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\build\generated\res\pngs\release
+ru.d00g00d.apkstore.dpi.dpi-module-updated_navigation_xml-1 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\build\generated\updated_navigation_xml\release
+ru.d00g00d.apkstore.dpi.dpi-module-packageReleaseResources-2 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+ru.d00g00d.apkstore.dpi.dpi-module-packageReleaseResources-3 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+ru.d00g00d.apkstore.dpi.dpi-module-release-4 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\build\intermediates\merged_res\release\mergeReleaseResources
+ru.d00g00d.apkstore.dpi.dpi-module-main-5 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\main\res
+ru.d00g00d.apkstore.dpi.dpi-module-release-6 C:\Users\Kuznetsov\AndroidStudioProjects\ApkStore\dpi-module\src\release\res
+gradleHome-0 C:\Users\Kuznetsov\.gradle
